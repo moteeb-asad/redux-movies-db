@@ -1,32 +1,41 @@
-import { Container,Flex,Box} from '@chakra-ui/react'
-import MovieCard from '../components/MovieCard'
+import { Container, Flex, Box, Fade } from '@chakra-ui/react';
+import MovieCard from '../components/MovieCard';
 import { useSelector } from 'react-redux';
-import { STATUSES } from '../store/moviesSlice';
+import { STATUSES, DEFAULTS } from '../constants';
 import MovieCardSkeleton from '../components/MovieCardSkeleton';
 import HeaderFilter from '../components/HeaderFilter';
 
 function Home() {
-
-    const { data: movies, status } = useSelector((state) => state.movies);
+  const { data: movies, status } = useSelector(state => state.movies);
 
   return (
     <>
-
-      <Container maxW='8xl' color='white' padding={4} mt={50} mb={50}>
-          <HeaderFilter />
-          <Flex>
-              <Box flex="4">
-              {status === STATUSES.LOADING || status === STATUSES.ERROR ? (
+      <Container maxW="8xl" color="white" padding={4} mt={50} mb={50}>
+        <HeaderFilter />
+        <Flex>
+          <Box flex="4">
+            <Fade in={true} transition={{ enter: { duration: 0.3 } }}>
+              {status === STATUSES.LOADING ? (
                 <MovieCardSkeleton flexWidth="19%" />
+              ) : status === STATUSES.ERROR ? (
+                <Box textAlign="center" py={10}>
+                  <MovieCardSkeleton flexWidth="19%" />
+                </Box>
               ) : (
-                <MovieCard itemsPerPage={20} items={movies} flexWidth="19%"/>
+                <Fade in={true} transition={{ enter: { duration: 0.5 } }}>
+                  <MovieCard
+                    itemsPerPage={DEFAULTS.ITEMS_PER_PAGE}
+                    items={movies}
+                    flexWidth="19%"
+                  />
+                </Fade>
               )}
-              </Box>
-          </Flex>
+            </Fade>
+          </Box>
+        </Flex>
       </Container>
-
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;
