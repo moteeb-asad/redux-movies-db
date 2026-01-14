@@ -1,10 +1,8 @@
-import { extendTheme } from '@chakra-ui/react'
-
-import { StyleFunctionProps } from '@chakra-ui/theme-tools'
+import { extendTheme } from '@chakra-ui/react';
 
 const theme = extendTheme({
   styles: {
-    global: (props) => ({
+    global: props => ({
       body: {
         color: 'default',
         bg: '#F1F2F3',
@@ -15,6 +13,6 @@ const theme = extendTheme({
     heading: `"Montserrat", sans-serif`,
     body: `"Montserrat", sans-serif`,
   },
-})
+});
 
-export default theme
+export default theme;
