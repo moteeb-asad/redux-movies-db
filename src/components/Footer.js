@@ -1,10 +1,4 @@
-import {
-  Box,
-  Container,
-  Stack,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Container, Stack, Text, useColorModeValue } from '../lib/chakra';
 import { useLocation } from 'react-router-dom';
 
 export default function Footer() {
@@ -15,8 +9,7 @@ export default function Footer() {
       bg={useColorModeValue('#121620', 'gray.900')}
       color={useColorModeValue('#fff', 'gray.200')}
       className={
-        location.pathname === '/details' ||
-        location.pathname === '/project-details'
+        location.pathname === '/details' || location.pathname === '/about'
           ? 'fixed-footer'
           : ''
       }
@@ -29,12 +22,12 @@ export default function Footer() {
         <Container
           as={Stack}
           maxW={'6xl'}
-          py={4}
+          py={2}
           spacing={4}
           justify={'center'}
           align={'center'}
         >
-          <Text>© 2026. All rights reserved</Text>
+          <Text textStyle="sm">© 2026. All rights reserved</Text>
         </Container>
       </Box>
     </Box>

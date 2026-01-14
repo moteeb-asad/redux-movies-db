@@ -1,4 +1,4 @@
-import { Container, Flex, Box, Fade } from '@chakra-ui/react';
+import { Container, Flex, Box, Fade } from '../lib/chakra';
 import MovieCard from '../components/MovieCard';
 import { useSelector } from 'react-redux';
 import { STATUSES, DEFAULTS } from '../constants';
