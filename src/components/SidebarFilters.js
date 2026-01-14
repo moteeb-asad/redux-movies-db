@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Select,
   Heading,
@@ -12,12 +12,14 @@ import {
   Text,
   Box,
   Divider,
-} from '@chakra-ui/react';
+  Button,
+} from '../lib/chakra';
 import { useDispatch } from 'react-redux';
 import {
   fetchBySidebarSorting,
   fetchMovies,
   setSortByInitialized,
+  fetchByHeaderFilter,
 } from '../store/moviesSlice';
 import axios from 'axios';
 
@@ -75,13 +77,16 @@ function SidebarFilters() {
     if (selectedYear) params.push(`primary_release_year=${selectedYear}`);
     if (selectedLanguage)
       params.push(`with_original_language=${selectedLanguage}`);
-    if (minScore > 0) params.push(`vote_average.gte=${minScore / 10}`); // TMDB expects 0-10
+    // Slider is percent (0-100). TMDB's `vote_average` is 0-10, so convert percent to 0-10
+    if (minScore > 0) params.push(`vote_average.gte=${minScore / 10}`);
     if (sortBy) params.push(`sort_by=${sortBy}`);
     const query =
       params.length > 0
         ? `discover/movie?${params.join('&')}`
         : 'discover/movie';
-    dispatch(fetchMovies(query));
+    // Set the query in the movies slice first, then fetchMovies()
+    dispatch(fetchByHeaderFilter(query));
+    dispatch(fetchMovies());
   }, [
     selectedGenres,
     selectedYear,
@@ -101,6 +106,18 @@ function SidebarFilters() {
   const handleYearChange = e => setSelectedYear(e.target.value);
   const handleLanguageChange = e => setSelectedLanguage(e.target.value);
   const handleScoreChange = val => setMinScore(val);
+
+  const handleClearAll = () => {
+    setSelectedGenres([]);
+    setSelectedYear('');
+    setSelectedLanguage('');
+    setMinScore(0);
+    setSortBy('');
+    // Reset slice query to default discover and reload movies
+    dispatch(fetchByHeaderFilter('discover/movie'));
+    dispatch(setSortByInitialized(false));
+    dispatch(fetchMovies());
+  };
 
   return (
     <>
@@ -208,8 +225,8 @@ function SidebarFilters() {
           colorScheme="yellow"
           defaultValue={0}
           min={0}
-          max={10}
-          step={0.1}
+          max={100}
+          step={1}
           value={minScore}
           onChange={handleScoreChange}
         >
@@ -219,9 +236,18 @@ function SidebarFilters() {
           <SliderThumb />
         </Slider>
         <Text fontSize="sm" mt={1} color="black">
-          Min Score: {minScore.toFixed(1)}
+          Min Score: {minScore}% ({(minScore / 10).toFixed(1)}/10)
         </Text>
       </Box>
+      <Button
+        mt={3}
+        colorScheme="yellow"
+        width="100%"
+        onClick={handleClearAll}
+        className="clear-all-btn"
+      >
+        Clear All
+      </Button>
     </>
   );
 }

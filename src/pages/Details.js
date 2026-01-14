@@ -11,10 +11,11 @@ import {
   Center,
   Wrap,
   WrapItem,
-} from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+} from '../lib/chakra';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+
 const apiKey = process.env.REACT_APP_TMDB_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3/';
 

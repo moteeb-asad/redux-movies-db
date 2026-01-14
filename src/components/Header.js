@@ -17,14 +17,14 @@ import {
   Button,
   Text,
   Link as ChakraLink,
-} from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon, Search2Icon } from '@chakra-ui/icons';
+} from '../lib/chakra';
+import { HamburgerIcon, CloseIcon, Search2Icon } from '../lib/chakra-icons';
 import {
   NavLink,
   useNavigate,
   Link as ReactRouterLink,
 } from 'react-router-dom';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchMovies, setQuery } from '../store/searchSlice';
 import { setClickedMovie } from '../store/moviesSlice';
@@ -36,9 +36,9 @@ export default function Header() {
   const searchResults = useSelector(state => state.search.searchResults);
   const dispatch = useDispatch();
 
-  const [suggestedResults, setSuggestedResults] = useState([]);
+  // Suggested results handled from redux `searchResults` directly
   const [showSuggestedBox, setShowSuggestedBox] = useState(false);
-  const [showMore, setShowMore] = useState(true);
+  const [showMore] = useState(true);
   const navigate = useNavigate();
 
   const handleSearchChange = async e => {
@@ -47,7 +47,7 @@ export default function Header() {
     dispatch(setQuery(query));
     try {
       dispatch(searchMovies());
-      setSuggestedResults(searchResults.slice(0, 4));
+      // suggestions are read directly from `searchResults` selector
       setShowSuggestedBox(false);
     } catch (error) {
       // dispatch(setError(error.message));
@@ -112,11 +112,11 @@ export default function Header() {
                   <NavLink to="/">
                     <span>Home</span>
                   </NavLink>
-                  <NavLink to="/filter-movies">
-                    <span>Movies</span>
+                  <NavLink to="/explore-movies">
+                    <span>Explore Movies</span>
                   </NavLink>
-                  <NavLink to="/project-details">
-                    <span>Project Details</span>
+                  <NavLink to="/about">
+                    <span>About</span>
                   </NavLink>
                 </HStack>
               </HStack>
@@ -220,8 +220,8 @@ export default function Header() {
               <Box pb={4} display={{ md: 'none' }} className="mobile-nav">
                 <Stack as={'nav'} spacing={4}>
                   <NavLink to="/">Home</NavLink>
-                  <NavLink to="/filter-movies">Movies</NavLink>
-                  <NavLink to="/project-details">Project Details</NavLink>
+                  <NavLink to="/explore-movies">Movies</NavLink>
+                  <NavLink to="/about">About</NavLink>
                 </Stack>
               </Box>
             ) : null}

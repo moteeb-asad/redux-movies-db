@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Skeleton,
   Card,
@@ -6,7 +5,7 @@ import {
   useMediaQuery,
   Box,
   Flex,
-} from '@chakra-ui/react';
+} from '../lib/chakra';
 import { keyframes } from '@emotion/react';
 import { DEFAULTS, BREAKPOINTS, ANIMATION_DURATIONS } from '../constants';
 
@@ -20,7 +19,7 @@ const shimmer = keyframes`
   }
 `;
 
-function MovieCardSkeleton({ flexWidth }) {
+function MovieCardSkeleton({ flexWidth, count = DEFAULTS.SKELETON_COUNT }) {
   const [isMobile] = useMediaQuery(`(max-width: ${BREAKPOINTS.MOBILE})`);
 
   // Custom skeleton style with shimmer effect
@@ -39,7 +38,7 @@ function MovieCardSkeleton({ flexWidth }) {
       opacity={0.8}
       transition={`opacity ${ANIMATION_DURATIONS.NORMAL}s ease-in-out`}
     >
-      {Array.from(Array(DEFAULTS.SKELETON_COUNT)).map((_, index) => (
+      {Array.from(Array(count)).map((_, index) => (
         <Box
           boxShadow="xl"
           w={isMobile ? '48%' : `${flexWidth}`}
@@ -47,7 +46,6 @@ function MovieCardSkeleton({ flexWidth }) {
           bg="gray.300"
           mb={4}
           key={index}
-          borderRadius="lg"
           overflow="hidden"
           transition={`transform ${ANIMATION_DURATIONS.FAST}s ease-in-out`}
           _hover={{

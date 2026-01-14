@@ -83,14 +83,17 @@ export const fetchMovies = createAsyncThunk(
       const state = getState();
 
       if (state.movies.query === 'popular') {
-        console.log('popular.state.movies-------', state.movies);
         let combinedArray = [];
+        const pageParam =
+          state.movies.page && state.movies.page > 1
+            ? `&page=${state.movies.page}`
+            : '';
         const [moviesRes, tvRes] = await Promise.all([
           axios.get(
-            `${API_CONFIG.BASE_URL}movie/popular?api_key=${API_CONFIG.API_KEY}`
+            `${API_CONFIG.BASE_URL}movie/popular?api_key=${API_CONFIG.API_KEY}${pageParam}`
           ),
           axios.get(
-            `${API_CONFIG.BASE_URL}tv/popular?api_key=${API_CONFIG.API_KEY}`
+            `${API_CONFIG.BASE_URL}tv/popular?api_key=${API_CONFIG.API_KEY}${pageParam}`
           ),
         ]);
         const movies = moviesRes.data.results;
@@ -98,14 +101,17 @@ export const fetchMovies = createAsyncThunk(
         combinedArray = [...movies, ...tv];
         return combinedArray;
       } else if (state.movies.query === 'upcoming') {
-        console.log('upcoming.state.movies-------', state.movies);
         let combinedArray = [];
+        const pageParam =
+          state.movies.page && state.movies.page > 1
+            ? `&page=${state.movies.page}`
+            : '';
         const [moviesRes, tvRes] = await Promise.all([
           axios.get(
-            `${API_CONFIG.BASE_URL}movie/upcoming?api_key=${API_CONFIG.API_KEY}`
+            `${API_CONFIG.BASE_URL}movie/upcoming?api_key=${API_CONFIG.API_KEY}${pageParam}`
           ),
           axios.get(
-            `${API_CONFIG.BASE_URL}tv/on_the_air?api_key=${API_CONFIG.API_KEY}`
+            `${API_CONFIG.BASE_URL}tv/on_the_air?api_key=${API_CONFIG.API_KEY}${pageParam}`
           ),
         ]);
         const movies = moviesRes.data.results;
@@ -122,6 +128,10 @@ export const fetchMovies = createAsyncThunk(
         if (!url.includes('region=') && !url.includes('region')) {
           url += '&region=US';
         }
+        // Add page parameter for pagination
+        if (state.movies.page && state.movies.page > 1) {
+          url += `&page=${state.movies.page}`;
+        }
         const res = await axios.get(url);
         let newResults = res.data.results;
         let combinedDiscoveredMovies;
@@ -137,12 +147,13 @@ export const fetchMovies = createAsyncThunk(
 
         return combinedDiscoveredMovies;
       } else {
-        console.log('general.state.movies-------', state.movies);
-        console.log(
-          `${API_CONFIG.BASE_URL}${state.movies.query}?api_key=${API_CONFIG.API_KEY}&region=US`
-        );
+        // Append page if present
+        const pageParam =
+          state.movies.page && state.movies.page > 1
+            ? `&page=${state.movies.page}`
+            : '';
         const res = await axios.get(
-          `${API_CONFIG.BASE_URL}${state.movies.query}?api_key=${API_CONFIG.API_KEY}&region=US`
+          `${API_CONFIG.BASE_URL}${state.movies.query}?api_key=${API_CONFIG.API_KEY}&region=US${pageParam}`
         );
         return res.data.results;
       }

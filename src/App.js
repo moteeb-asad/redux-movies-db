@@ -4,7 +4,7 @@ import '../src/assets/css/styles.css';
 import '@fontsource/open-sans/600.css';
 import '@fontsource/montserrat';
 import '@fontsource/montserrat/700.css';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider } from './lib/chakra';
 import theme from './theme';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -13,8 +13,8 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import Details from './pages/Details';
 import SearchResult from './pages/SearchResult';
-import FilterMovies from './pages/FilterMovies';
-import ProjectDetails from './pages/ProjectDetails';
+import ExploreMovies from './pages/ExploreMovies';
+import About from './pages/About';
 
 function App() {
   return (
@@ -24,10 +24,10 @@ function App() {
           <Header />
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route exact path="/filter-movies" element={<FilterMovies />} />
+            <Route exact path="/explore-movies" element={<ExploreMovies />} />
             <Route exact path="/details" element={<Details />} />
             <Route exact path="/search" element={<SearchResult />} />
-            <Route exact path="/project-details" element={<ProjectDetails />} />
+            <Route exact path="/about" element={<About />} />
           </Routes>
           <Footer />
         </Router>

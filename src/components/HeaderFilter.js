@@ -1,5 +1,5 @@
-import { Box } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import { Box } from '../lib/chakra';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   clearMoviesState,
@@ -19,9 +19,8 @@ function HeaderFilter() {
 
   useEffect(() => {
     dispatch(fetchByHeaderFilter('trending/all/day'));
-    //dispatch(clearMoviesState());
     dispatch(fetchMovies());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Box>

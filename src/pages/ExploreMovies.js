@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container, Flex, Box, Heading } from '@chakra-ui/react';
+import { Container, Flex, Box, Heading } from '../lib/chakra';
 import MovieCard from '../components/MovieCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMovies, clearMoviesState } from '../store/moviesSlice';
@@ -7,7 +7,7 @@ import { STATUSES } from '../constants';
 import MovieCardSkeleton from '../components/MovieCardSkeleton';
 import SidebarFilters from '../components/SidebarFilters';
 
-function FilterMovies() {
+function ExploreMovies() {
   const dispatch = useDispatch();
   const { data: movies, status } = useSelector(state => state.movies);
 
@@ -30,7 +30,7 @@ function FilterMovies() {
               className="movie-title"
               color="#000"
             >
-              FILTER :
+              FILTERS :
             </Heading>
             <SidebarFilters />
           </Box>
@@ -51,4 +51,4 @@ function FilterMovies() {
   );
 }
 
-export default FilterMovies;
+export default ExploreMovies;
