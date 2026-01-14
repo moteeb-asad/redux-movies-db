@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Select,
-  Tag,
-  TagLabel,
   Heading,
   Checkbox,
   CheckboxGroup,

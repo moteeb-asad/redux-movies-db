@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react';
-import { Container, Flex, Box, Heading, Hide } from '@chakra-ui/react';
+import { Container, Flex, Box, Heading } from '@chakra-ui/react';
 import MovieCard from '../components/MovieCard';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchMovies,
-  fetchByLoadMore,
-  clearMoviesState,
-} from '../store/moviesSlice';
+import { fetchMovies, clearMoviesState } from '../store/moviesSlice';
 import { STATUSES } from '../constants';
 import MovieCardSkeleton from '../components/MovieCardSkeleton';
 import SidebarFilters from '../components/SidebarFilters';
@@ -19,7 +15,7 @@ function FilterMovies() {
     dispatch(clearMoviesState('discover/movie'));
     dispatch(fetchMovies('discover/movie'));
     // dispatch(fetchByLoadMore('discover/movie'));
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

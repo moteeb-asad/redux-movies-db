@@ -6,7 +6,6 @@ import {
   Image,
   Text,
   Avatar,
-  HStack,
   Divider,
   SimpleGrid,
   Center,

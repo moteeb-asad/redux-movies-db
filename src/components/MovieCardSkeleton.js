@@ -6,8 +6,8 @@ import {
   useMediaQuery,
   Box,
   Flex,
-  keyframes,
 } from '@chakra-ui/react';
+import { keyframes } from '@emotion/react';
 import { DEFAULTS, BREAKPOINTS, ANIMATION_DURATIONS } from '../constants';
 
 // Define smooth animation keyframes
