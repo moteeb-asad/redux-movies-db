@@ -64,6 +64,21 @@ function Details() {
     fetchExtra();
   }, [clickedMovie]);
 
+  if (!clickedMovie) {
+    return (
+      <div className="c-wrap">
+        <Container maxW="4xl" bg="white" padding={6} mt={50} mb={50}>
+          <Heading as="h3" size="md" color="black" mb={2}>
+            No movie selected
+          </Heading>
+          <Text color="black">
+            Go back to the home page and pick a movie to view details.
+          </Text>
+        </Container>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="c-wrap">
